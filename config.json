@@ -10,7 +10,7 @@
         "id": "limit-login",
         "path": "/api/login",
         "limit": 10,
-        "algorithm": "",
+        "algorithm": "leaky-bucket",
         "window_ms": 300000,
         "http_method": "post"
       },
@@ -18,7 +18,7 @@
         "id": "limit-signup",
         "path": "/api/signup",
         "limit": 5,
-        "algorithm": "",
+        "algorithm": "sliding-window-log",
         "window_ms": 300000,
         "http_method": "post"
       },
@@ -27,7 +27,7 @@
         "path": "/",
         "ip": "*",
         "limit": 200,
-        "algorithm": "",
+        "algorithm": "sliding-window-counter",
         "window_ms": 60000,
         "http_method": "get"
       }

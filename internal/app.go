@@ -23,6 +23,7 @@ func Run() error {
 	if algoErr != nil {
 		return algoErr
 	}
+	algo.SelfCleanUp()
 	server := server.New(config, algo)
 	ctx, cancel := context.WithCancel(context.Background())
 	errCh := make(chan error)

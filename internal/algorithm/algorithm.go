@@ -4,6 +4,7 @@ package algorithm
 import (
 	"fmt"
 	"net"
+	"reflect"
 	"time"
 
 	"github.com/praveenmahasena/go-limiter/internal/config"
@@ -17,8 +18,11 @@ type Algorithm struct {
 // Algo ...
 type Algo interface{}
 
-func SelfCleanUp(a Algo) {
-
+// SelfCleanUp does what it's meant to do
+func (a *Algorithm) SelfCleanUp() {
+	for _, elem := range a.a {
+		e := reflect.TypeOf(elem)
+	}
 }
 
 // New to init algorithm
@@ -29,16 +33,16 @@ func New(algo []config.Rule) (*Algorithm, error) {
 		if mp[elem.ID] != nil {
 			return nil, fmt.Errorf("id %v already exists", elem.ID)
 		}
-		switch elem.ID {
-		case "leaky_bucket":
+		switch elem.Algorithm {
+		case "leaky-bucket":
 			mp[elem.ID] = LeakyBucket{elem.Limit, time.Duration(elem.Windowms), make(map[*net.IP]uint)}
-		case "token_bucket":
+		case "token-bucket":
 			mp[elem.ID] = TokenBucket{elem.Limit, time.Duration(elem.Windowms), make(map[*net.IP]uint)}
-		case "fixed_window_counter":
+		case "fixed-window-counter":
 			mp[elem.ID] = FixedWindowCounter{elem.Limit, time.Duration(elem.Windowms), make(map[*net.IP]uint)}
-		case "sliding_window_log":
+		case "sliding-window-log":
 			mp[elem.ID] = SlidingWindowLog{elem.Limit, time.Duration(elem.Windowms), make(map[*net.IP]uint)}
-		case "sliding_window_counter":
+		case "sliding-window-counter":
 			mp[elem.ID] = SlidingWindowCounter{elem.Limit, time.Duration(elem.Windowms), make(map[*net.IP]uint)}
 		}
 	}
