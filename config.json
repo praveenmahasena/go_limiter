@@ -24,7 +24,7 @@
       },
       {
         "id": "limit-by-ip",
-        "path":"/",
+        "path": "/",
         "ip": "*",
         "limit": 200,
         "algorithm": "",
@@ -34,10 +34,8 @@
     ]
   },
   "routing": {
-    "default_backend": {
-      "backend_url": "http://localhost:8080",
-      "go_limiter_port": ":42069"
-    }
+    "backend_url": "http://localhost:8080",
+    "go_limiter_port": ":42069"
   },
   "response_handling": {
     "on_limit_exceeded": {
@@ -45,9 +43,5 @@
       "message": "Rate limit exceeded. Please wait.",
       "retry_after": true
     }
-  },
-  "redis": {
-    "uri": "",
-    "password": ""
   }
 }
