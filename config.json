@@ -1,0 +1,53 @@
+{
+  "global_settings": {
+    "logging": true,
+    "metrics": false,
+    "cleanup_interval_ms": 60000
+  },
+  "rate_limiter": {
+    "rules": [
+      {
+        "id": "limit-login",
+        "path": "/api/login",
+        "limit": 10,
+        "algorithm": "",
+        "window_ms": 300000,
+        "http_method": "post"
+      },
+      {
+        "id": "limit-signup",
+        "path": "/api/signup",
+        "limit": 5,
+        "algorithm": "",
+        "window_ms": 300000,
+        "http_method": "post"
+      },
+      {
+        "id": "limit-by-ip",
+        "path":"/",
+        "ip": "*",
+        "limit": 200,
+        "algorithm": "",
+        "window_ms": 60000,
+        "http_method": "get"
+      }
+    ]
+  },
+  "routing": {
+    "default_backend": {
+      "backend_url": "http://localhost:8080",
+      "go_limiter_port": ":42069"
+    }
+  },
+  "response_handling": {
+    "on_limit_exceeded": {
+      "http_status": 429,
+      "message": "Rate limit exceeded. Please wait.",
+      "retry_after": true
+    }
+  },
+  "redis": {
+    "uri": "",
+    "password": ""
+  }
+}
