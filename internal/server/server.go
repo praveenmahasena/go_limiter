@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -52,6 +53,9 @@ func (s *Server) Run(ctx context.Context, errCh chan error) {
 func (s *Server) route() {
 	for _, elem := range s.Rules {
 		path := fmt.Sprintf("%v %v", strings.ToUpper(elem.HTTPMethod), elem.Path)
+		if s.Config.Logging {
+			log.Println(path)
+		}
 		s.mux.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
 			req, reqErr := http.NewRequest(r.Method, config.ServerAddr+r.RequestURI, nil)
 			if reqErr != nil {
