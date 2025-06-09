@@ -23,11 +23,15 @@ func Run() error {
 	if algoErr != nil {
 		return algoErr
 	}
-	algo.SelfCleanUp()
+
 	server := server.New(config, algo)
 	ctx, cancel := context.WithCancel(context.Background())
 	errCh := make(chan error)
 	defer cancel()
+
+	for al := range algo {
+		go algo[al].SelfCleanUp()
+	}
 
 	go func(cancel context.CancelFunc) {
 		sigCh := make(chan os.Signal, 1)
@@ -46,6 +50,5 @@ func Run() error {
 	case err := <-errCh:
 		return err
 	}
-
 	return <-errCh
 }

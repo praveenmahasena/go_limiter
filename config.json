@@ -12,29 +12,35 @@
         "limit": 10,
         "algorithm": "leaky-bucket",
         "window_ms": 300000,
-        "http_method": "post"
+        "http_method": "post",
+        "message": "Rate limit exceeded. Please wait.",
+        "http_status": 429
       },
       {
         "id": "limit-signup",
         "path": "/api/signup",
         "limit": 5,
-        "algorithm": "sliding-window-log",
+        "algorithm": "leaky-bucket",
         "window_ms": 300000,
-        "http_method": "post"
+        "http_method": "post",
+        "message": "Rate limit exceeded. Please wait.",
+        "http_status": 429
       },
       {
         "id": "limit-by-ip",
         "path": "/",
         "ip": "*",
-        "limit": 200,
-        "algorithm": "sliding-window-counter",
+        "limit": 2,
+        "algorithm": "user-global-bucket",
         "window_ms": 60000,
-        "http_method": "get"
+        "http_method": "get",
+        "message": "Rate limit exceeded. Please wait.",
+        "http_status": 429
       }
     ]
   },
   "routing": {
-    "backend_url": "http://localhost:8080",
+    "backend_url": "http://localhost:4242",
     "go_limiter_port": ":42069"
   },
   "response_handling": {

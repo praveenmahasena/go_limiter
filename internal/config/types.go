@@ -3,6 +3,11 @@ package config
 
 import "time"
 
+var (
+	// ServerAddr to server
+	ServerAddr string
+)
+
 // Config ...
 type Config struct {
 	GlobalSettings   `json:"global_settings"`
@@ -46,7 +51,7 @@ type ResponseHandling struct {
 
 // OnLimitExceeded ...
 type OnLimitExceeded struct {
+	RetryAfter bool   `json:"retry_after"`
 	HTTPStatus uint   `json:"http_status"`
 	Message    string `json:"message"`
-	RetryAfter bool   `json:"retry_after"`
 }

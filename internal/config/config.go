@@ -37,5 +37,6 @@ func conf(path string) (*Config, error) {
 	if err := json.Unmarshal(b, conf); err != nil {
 		return nil, fmt.Errorf("error during writing to config with value %v", err)
 	}
+	ServerAddr = conf.BackendURL
 	return conf, nil
 }
