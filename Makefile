@@ -34,7 +34,7 @@ package: golimiter
 package_race: golimiter_race
 
 golimiter:
-	@go build -o ./bin/golimiter ./cmd/golimiter/
+	go build -a -tags netgo,osusergo -ldflags "-extldflags '-static' -s -w" -o ./bin/golimiter ./cmd/golimiter
 
 golimiter_race:
-	@go build --race -o ./bin/golimiter_race ./cmd/golimiter/
+	go build -a -tags netgo,osusergo -ldflags "-extldflags '-static' -s -w" --race -o ./bin/golimiter ./cmd/golimiter
